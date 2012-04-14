@@ -6,21 +6,19 @@ module TableGem
   end
   module TableHelpers
     def table_for(array,options={},&block)
-      puts array
+      # content_tag_string :table, capture(&block), options
       content_tag :table, options do
-        content_tag :thead do
+        array.map do |row|
           content_tag :tr do
-            "hello world"
+            block.call row
           end
-        end
-        array.each do |item|
-          block.call(item)
-        end
+        end.join.html_safe
       end
     end
     def column(name,options={},&block)
-      puts "column - #{name}"
-      "column - #{name}"
+      content_tag :td do
+        name
+      end
     end
   end
 end
